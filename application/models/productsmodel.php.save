@@ -1,0 +1,140 @@
+<?php
+
+class ProductsModel
+{
+
+	function __construct($db)
+	{
+		try {
+			$this->db = $db;
+		} catch (PDOException $e){
+			exit('Database connection error');
+		}
+	}
+
+
+	public function getAllProducts()
+	{
+		$sql = "SELECT * FROM products productsmodel.php";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+
+		return $query->fetchAll();
+	}
+
+
+	public function getAllProductsSearch($text)
+	{
+		$sql = "SELECT * FROM products WHERE products.product_name LIKE '%".$text."%' OR products.product_description LIKE '%".$text."%'";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+
+		return $query->fetchAll();
+	}
+
+
+	public function getAllProductsWithPrice()
+	{
+		$sql = "SELECT products.id, products.product_name, products.product_category_id, products.product_photo, products.product_description, prices.id AS price_id, prices.price, prices.discount_in_rupees, prices.discount_in_percent, prices.offer_price, prices.delivery_charge FROM products INNER JOIN prices ON products.id = prices.product_id";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+		$result = $query->fetchAll();
+
+		return $result;
+	}
+
+
+	public function getAllProductsWithPriceSearch($text)
+	{
+		$sql = "SELECT products.id, products.product_name, products.product_category_id, products.product_photo, products.product_description, prices.id AS price_id, prices.price, prices.discount_in_rupees, prices.discount_in_percent, prices.offer_price, prices.delivery_charge FROM products INNER JOIN prices ON products.id = prices.product_id WHERE products.product_name LIKE '%".$text."%' OR products.product_description LIKE '%".$text."%' ";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+		$result = $query->fetchAll();
+
+		return $result;
+	}
+
+
+	public function getAProductsWithPrice($product_id)
+	{
+		$sql = "SELECT products.id, products.product_name, products.product_category_id, products.product_photo, products.product_description, prices.id AS price_id, prices.price, prices.discount_in_rupees, prices.discount_in_percent, prices.offer_price, prices.delivery_charge FROM products INNER JOIN prices ON products.id = prices.product_id WHERE products.id = $product_id";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+		$result = $query->fetchAll();
+
+		return $result;
+	}
+
+	public function getCityAvailableProductsPrices($user_id){
+		$sql = "SELECT city_id FROM addresses WHERE user_id='$user_id'";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+
+		$results = $query->fetchAll();
+
+		foreach($results as $result) {
+			$city_id = $result->city_id;
+		}
+
+		$sql = "SELECT price_id FROM city_price_relationships WHERE city_id='$city_id'";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+
+		$price_ids = $query->fetchAll();
+
+		foreach($price_ids as $price_id){
+			$array[] = $price_id->price_id;
+		}
+
+		return $array;
+	}
+
+	
+	public function getCityAvailableProductPrices($user_id){
+		$sql = "SELECT city_id FROM addresses WHERE user_id='$user_id'";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+
+		$results = $query->fetchAll();
+
+		foreach($results as $result) {
+			$city_id = $result->city_id;
+		}
+
+		$sql = "SELECT price_id FROM city_price_relationships WHERE city_id='$city_id'";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+
+		$price_ids = $query->fetchAll();
+
+		foreach($price_ids as $price_id){
+			$array[] = $price_id->price_id;
+		}
+
+		return $array;
+	}
+
+
+	public function getProducts($category_id)
+	{
+		$sql = "SELECT * FROM products WHERE product_category_id = '$category_id'";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+
+		return $query->fetchAll();
+	}
+
+
+	public function getProductsPrice($category_id)
+	{
+		$sql = "SELECT products.id, products.product_name, products.product_category_id, products.product_photo, products.product_description, prices.id AS price_id, prices.price, prices.discount_in_rupees, prices.discount_in_percent, prices.offer_price, prices.delivery_charge FROM products INNER JOIN prices ON products.id = prices.product_id WHERE products.product_category_id = '$category_id'";
+		$query = $this->db->prepare($sql);
+		$query->execute();
+		$result = $query->fetchAll();
+
+		return $result;
+		
+	}
+
+
+}

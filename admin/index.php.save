@@ -1,0 +1,66 @@
+<?php
+$db_connect = mysqli_connect("localhost","root","1iSHgdIKGGYD","mithu");
+session_start();
+$email = $_POST["email"];
+$password = $_POST["password"];
+
+if(isset($_POST["submit"])){
+if(empty($email)){
+    echo "email is empty";
+    die;
+}
+if(empty($password)){
+    echo "password is empty";
+    die;
+}
+if($email != "admin@kansu.in"){
+echo "please enter valid email";
+die;
+}
+if($password != "Az0912345youy4"){
+echo "please enter valid password";
+die;
+}
+$randkey = base64_encode(openssl_random_pseudo_bytes(32));
+$_SESSION["key"] = $randkey;
+$query = "INSERT INTO admin_login(login_key) VALUES ('$randkey')";
+$result = mysqli_query($db_connect,$query);
+if($result){
+echo "you are now logged in";
+}
+header("Location:index.php");
+exit;
+}
+
+if(isset($_SESSION["key"]) && !empty($_SESSION["key"])) {
+$key = $_SESSION["key"];
+$query = "SELECT * FROM admin_login WHERE login_key = '$key'";
+$result = mysqli_query($db_connect,$query);
+
+if(mysqli_num_rows($result) > 0){
+?>
+<?php
+
+
+<?php
+}
+else
+{
+die;
+}
+
+}
+else {
+?>
+
+<html>
+<head></head>
+<body>
+<form action="" method="POST">
+<input type="text" placeholder="Email" name="email"/>
+<input type="password" placeholder="Password" name="password" />
+<input type="submit" value="Submit" name="submit" />
+</form>
+</body>
+</html>
+<?php } ?>

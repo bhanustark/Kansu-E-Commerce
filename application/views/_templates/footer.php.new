@@ -1,0 +1,118 @@
+<!-- Tap Target Structure -->
+<div class="tap-target" data-target="user-menu">
+<div class="tap-target-content">
+<h5>Login</h5>
+<p>Please login to purchase products.</p>
+</div>
+</div>
+<style>
+.tap-target-wrapper {
+	position: fixed !important;
+}
+.tap-target-wave::before, .tap-target-wave::after {
+	background-color: #2196f3 !important;
+}
+</style>
+<?php
+if($logincheck == false) { ?>
+	<script>
+	$(document).ready(function(){
+		$('.tap-target').tapTarget('open');
+	});
+	</script>
+	<?php
+}
+ ?>
+
+		</div> <!-- Closing container div -->
+    </div>
+		</div>
+
+
+<script>
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.tooltipped');
+    var instances = M.Tooltip.init(elems);
+  });
+
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems,{edge:'right'});
+  });
+
+  document.onreadystatechange = function () {
+  var state = document.readyState
+  if (state == 'interactive') {
+
+  } else if (state == 'complete') {
+      setTimeout(function(){
+         document.getElementById('progress').style.visibility="hidden";
+         },1000);
+  }
+}
+function goBack() {
+  window.history.go(-1);
+}
+  document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('select');
+    var instances = M.FormSelect.init(elems);
+  });
+  </script>
+  <script>
+$('img').load(function(){
+   $(this).css('background','none');
+});
+  </script>
+<script>
+$(function(){
+
+  $('#old_search').focus(function(){
+
+    $("#new_search").show();
+    $("#search").focus();
+    $("#old").hide();
+
+  })
+
+  $('#search').blur(function(){
+
+    $("#new_search").hide();
+    $("#old").show();
+
+  });
+});
+</script>
+		<script src="/js/materialize.min.js"></script>
+  <script>
+$(".dropdown-trigger").dropdown();
+  </script>
+
+  <script>
+    $(document).ready(function(){
+    $('.modal').modal();
+  });
+</script>
+
+      <!-- Core Javascript -->
+			<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="/js/imagesloaded.pkgd.min.js"></script>
+    <script src="/js/masonry.pkgd.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="/js/color-thief.min.js"></script>
+    <script src="/js/galleryExpand.js"></script>
+    <script src="/js/init.js"></script>
+
+<script>
+M.AutoInit();
+
+document.addEventListener('DOMContentLoaded', function() {
+	var elems = document.querySelectorAll('.tap-target');
+	var instances = M.TapTarget.init();
+});
+
+</script>
+	</body>
+</html>
+
